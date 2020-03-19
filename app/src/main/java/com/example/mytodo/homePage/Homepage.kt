@@ -29,24 +29,36 @@ class Homepage : Fragment() {
         binding.lifecycleOwner = this
 
 
+        viewModelSetup()
+
+
+        val adapter = Adapter()
+        binding.recyclerView.adapter = adapter
+
+        viewModel.items.observe(viewLifecycleOwner , Observer {
+            it?.let{
+                adapter.data = it
+            }
+        })
+
+        viewModel.toAddProduct?.observe(viewLifecycleOwner, Observer {
+            if (it == true) {
+                binding.toolbar.findNavController()
+                    .navigate(HomepageDirections.actionHomepageToAdd2(flag = 0))
+                viewModel.doneToAdd()
+            }
+        })
+
+        return binding.root
+    }
+
+    private fun viewModelSetup() {
         val application = requireNotNull(this.activity).application
         val dataSource = ItemDatabase.getInstance(application).itemDao
         val viewModelFactory = HomePageVewModelFactory(dataSource, application)
         viewModel =
             ViewModelProviders.of(this, viewModelFactory).get(HomepageViewModel::class.java)
         binding.viewModel = viewModel
-
-
-
-        viewModel.toAddProduct?.observe(viewLifecycleOwner, Observer {
-            if (it == true) {
-                binding.toolbar.findNavController()
-                    .navigate(HomepageDirections.actionHomepageToAdd2())
-                viewModel.doneToAdd()
-            }
-        })
-
-        return binding.root
     }
 
 

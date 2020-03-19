@@ -18,5 +18,9 @@
         android:id="@+id/add2"
         android:name="com.example.mytodo.addNewProduct.Add"
         android:label="add_fragment"
-        tools:layout="@layout/add_fragment" />
+        tools:layout="@layout/add_fragment" >
+        <argument
+            android:name="flag"
+            app:argType="integer" />
+    </fragment>
 </navigation>

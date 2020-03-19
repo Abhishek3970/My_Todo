@@ -5,6 +5,10 @@
 
     <data>
 
+        <variable
+            name="addViewModel"
+            type="com.example.mytodo.addNewProduct.AddViewModel" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -16,6 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
+            app:navigationIcon="@drawable/ic_arrow_back_white_24dp"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -43,18 +48,19 @@
             android:layout_height="wrap_content"
             android:hint="Enter details"
             android:inputType="textMultiLine"
-            app:layout_constraintBottom_toTopOf="@+id/cancel"
+            app:layout_constraintBottom_toTopOf="@+id/delete"
             app:layout_constraintEnd_toEndOf="@+id/heading"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="@+id/heading"
             app:layout_constraintTop_toBottomOf="@+id/heading" />
 
         <Button
-            android:id="@+id/cancel"
+            android:id="@+id/delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/colorPrimaryDark"
-            android:text="Cancel"
+            android:text="Delete"
+            android:onClick="@{()->addViewModel.navigate()}"
             android:textColor="@android:color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

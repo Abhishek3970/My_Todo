@@ -19,7 +19,7 @@ class HomepageViewModel(
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
 
-    private var items = database.getAllItem()
+    var items = database.getAllItem()
 
     private var _toAddProduct = MutableLiveData<Boolean>()
     val toAddProduct: LiveData<Boolean>?

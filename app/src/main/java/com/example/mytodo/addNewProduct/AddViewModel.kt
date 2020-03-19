@@ -1,7 +1,46 @@
 package com.example.mytodo.addNewProduct
 
-import androidx.lifecycle.ViewModel
+import android.app.Application
+import android.util.Log
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import com.example.mytodo.database.Item
+import com.example.mytodo.database.ItemDatabaseDao
+import kotlinx.coroutines.*
 
-class AddViewModel : ViewModel() {
+class AddViewModel(
+    val database: ItemDatabaseDao,
+    application: Application
+) : AndroidViewModel(application) {
 
+    private val _done = MutableLiveData<Boolean>()
+    val done: LiveData<Boolean>?
+        get() = _done
+
+    private var viewModelJob = Job()
+
+    private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
+
+    init {
+        _done.value = false
+    }
+
+    fun save(heading: String, description: String) {
+        uiScope.launch {
+            withContext(Dispatchers.IO) {
+                val item = Item(heading = heading, description = description)
+                database.insert(item)
+            }
+        }
+        navigate()
+    }
+
+    fun navigate() {
+        _done.value = true
+    }
+
+    fun doneNavigation(){
+        _done.value = false
+    }
 }
