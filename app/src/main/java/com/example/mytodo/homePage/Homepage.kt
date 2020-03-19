@@ -25,6 +25,9 @@ class Homepage : Fragment() {
         binding = DataBindingUtil.inflate(inflater , R.layout.homepage_fragment , container , false)
         viewModel = ViewModelProviders.of(this).get(HomepageViewModel::class.java)
         binding.toolbar.inflateMenu(R.menu.menu_delete_all)
+        binding.lifecycleOwner = this
+        binding.viewModel = viewModel
+
 
 
         return binding.root
