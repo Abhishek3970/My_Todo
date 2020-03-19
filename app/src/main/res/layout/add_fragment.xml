@@ -9,6 +9,10 @@
             name="addViewModel"
             type="com.example.mytodo.addNewProduct.AddViewModel" />
 
+        <variable
+            name="item"
+            type="com.example.mytodo.database.Item" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -35,7 +39,6 @@
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
             android:hint="Enter Title"
-            android:inputType="text"
             app:layout_constraintBottom_toTopOf="@+id/description"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -60,7 +63,7 @@
             android:layout_height="wrap_content"
             android:background="@color/colorPrimaryDark"
             android:text="Delete"
-            android:onClick="@{()->addViewModel.navigate()}"
+            android:onClick="@{()->addViewModel.deleteAndNavigate(item)}"
             android:textColor="@android:color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

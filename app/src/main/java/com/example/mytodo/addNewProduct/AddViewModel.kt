@@ -36,8 +36,28 @@ class AddViewModel(
         navigate()
     }
 
-    fun navigate() {
+    fun update(item : Item){
+        uiScope.launch {
+            withContext(Dispatchers.IO){
+                database.update(item)
+            }
+        }
+        navigate()
+    }
+
+    private fun navigate() {
         _done.value = true
+    }
+
+    fun deleteAndNavigate(item: Item) {  //delete here
+
+        uiScope.launch {
+            withContext(Dispatchers.IO){
+                database.delete(item)
+            }
+        }
+
+        navigate()
     }
 
     fun doneNavigation(){

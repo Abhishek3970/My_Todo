@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
 import com.example.mytodo.R
+import com.example.mytodo.database.Item
 import com.example.mytodo.database.ItemDatabase
 import com.example.mytodo.databinding.AddFragmentBinding
 import net.yslibrary.android.keyboardvisibilityevent.util.UIUtil
@@ -29,12 +30,22 @@ class Add : Fragment() {
 
         viewModelSetup()
 
-        toolbarSetup()
+        val arg = arguments?.let { AddArgs.fromBundle(it) }
+        val flag = arg?.flag
+        val item = Item(arg?.id!!, arg.heading, arg.description, arg.time)
+        binding.item = item
 
-        checkToShowDelete()
+        if (flag == 0) {
+            binding.delete.visibility = View.INVISIBLE
+        } else {
+            binding.heading.setText(item.heading)
+            binding.description.setText(item.description)
+        }
 
-        viewModel.done?.observe(viewLifecycleOwner , Observer {
-            if(it==true){
+        toolbarSetup(flag , item)
+
+        viewModel.done?.observe(viewLifecycleOwner, Observer {
+            if (it == true) {
                 binding.toolbar.findNavController().navigateUp()
                 UIUtil.hideKeyboard(this.activity!!)
                 viewModel.doneNavigation()
@@ -48,13 +59,6 @@ class Add : Fragment() {
         return binding.root
     }
 
-    private fun checkToShowDelete() {
-        val arg = arguments?.let { AddArgs.fromBundle(it) }
-        val flag = arg?.flag
-        if (flag == 0) {
-            binding.delete.visibility = View.INVISIBLE
-        }
-    }
 
     private fun viewModelSetup() {
         val application = requireNotNull(this.activity).application
@@ -66,15 +70,24 @@ class Add : Fragment() {
         binding.addViewModel = viewModel
     }
 
-    private fun toolbarSetup() {
+    private fun toolbarSetup(flag: Int?, item: Item) {
         binding.toolbar.inflateMenu(R.menu.menu_save)
         binding.toolbar.setOnMenuItemClickListener {
             if (it.itemId == R.id.save) {
                 if (binding.heading.text.toString().trim().isNotEmpty() && binding.description.text.toString().trim().isNotEmpty()) {
-                    viewModel.save(
-                        binding.heading.text.toString().trim(),
-                        binding.description.text.toString().trim()
-                    )
+                    when (flag) {
+                        0 -> {   //create New
+                            viewModel.save(
+                                binding.heading.text.toString().trim(),
+                                binding.description.text.toString().trim()
+                            )
+                        }
+                        1->{
+                            item.heading = binding.heading.text.toString().trim()
+                            item.description = binding.description.text.toString().trim()
+                            viewModel.update(item)
+                        }
+                    }
                 } else {
                     Toast.makeText(context!!, "Enter all fields", Toast.LENGTH_LONG).show()
                 }

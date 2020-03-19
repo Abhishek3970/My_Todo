@@ -22,6 +22,6 @@ fun TextView.setDescription(item: Item){
 @BindingAdapter("time")
 fun TextView.time(item: Item){
     item?.let{
-        text = item.time.toString()
+        text = item.time
     }
 }

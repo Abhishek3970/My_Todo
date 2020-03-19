@@ -4,11 +4,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.mytodo.R
 import com.example.mytodo.database.Item
 import com.example.mytodo.databinding.ItemBinding
 
-class Adapter : RecyclerView.Adapter<Adapter.myViewHolder>() {
+class Adapter(val clickListener: ItemClickListener) : RecyclerView.Adapter<Adapter.myViewHolder>() {
 
     var data = listOf<Item>()
         set(value) {
@@ -25,14 +24,15 @@ class Adapter : RecyclerView.Adapter<Adapter.myViewHolder>() {
 
     override fun onBindViewHolder(holder: myViewHolder, position: Int) {
         val item = data[position]
-        holder.bind(item)
+        holder.bind(item,clickListener)
     }
 
 
     class myViewHolder private constructor(private val binding: ItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: Item) {
+        fun bind(item: Item, clickListener: ItemClickListener) {
             binding.item = item
+            binding.click = clickListener
             binding.executePendingBindings()
         }
 
@@ -59,3 +59,7 @@ class ItemDiffCallback : DiffUtil.ItemCallback<Item>() {
     }
 
 }  //caused problems while hiding keyboard
+
+class ItemClickListener( val clickListener: (Item)-> Unit ){
+    fun onClick(item: Item) = clickListener(item)
+}

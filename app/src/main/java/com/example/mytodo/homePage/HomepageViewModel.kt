@@ -5,9 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.mytodo.database.ItemDatabaseDao
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
+import kotlinx.coroutines.*
 
 class HomepageViewModel(
     val database: ItemDatabaseDao,
@@ -18,6 +16,13 @@ class HomepageViewModel(
 
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
+    fun clear(){
+        uiScope.launch {
+            withContext(Dispatchers.IO){
+                database.clear()
+            }
+        }
+    }
 
     var items = database.getAllItem()
 
