@@ -13,6 +13,7 @@ import androidx.navigation.findNavController
 import com.example.mytodo.R
 import com.example.mytodo.database.ItemDatabase
 import com.example.mytodo.databinding.AddFragmentBinding
+import net.yslibrary.android.keyboardvisibilityevent.util.UIUtil
 
 class Add : Fragment() {
 
@@ -35,6 +36,7 @@ class Add : Fragment() {
         viewModel.done?.observe(viewLifecycleOwner , Observer {
             if(it==true){
                 binding.toolbar.findNavController().navigateUp()
+                UIUtil.hideKeyboard(this.activity!!)
                 viewModel.doneNavigation()
             }
         })
