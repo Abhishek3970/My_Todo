@@ -15,6 +15,7 @@
         android:text="Heading"
         android:textColor="@android:color/black"
         android:textSize="24sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -23,10 +24,10 @@
         android:id="@+id/description_ad"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:text="Description"
         android:textColor="@android:color/black"
-        android:textSize="18sp"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="@+id/heading_ad"
         app:layout_constraintStart_toStartOf="@+id/heading_ad"
         app:layout_constraintTop_toBottomOf="@+id/heading_ad" />
@@ -38,7 +39,7 @@
         android:layout_marginTop="16dp"
         android:text="time"
         android:textColor="@android:color/black"
-        android:textSize="14sp"
+        android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="@+id/description_ad"
         app:layout_constraintTop_toBottomOf="@+id/description_ad" />
 
@@ -46,7 +47,7 @@
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:layout_marginTop="16dp"
-        android:background="#0AFFFFFF"
+        android:background="#000000"
         app:layout_constraintTop_toBottomOf="@+id/textView_time"
         tools:layout_editor_absoluteX="16dp" />
 
