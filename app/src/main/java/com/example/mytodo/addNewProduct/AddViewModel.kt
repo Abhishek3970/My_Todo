@@ -26,7 +26,7 @@ class AddViewModel(
         _done.value = false
     }
 
-    fun save(heading: String, description: String) {
+    fun save(heading: String, description: String) {          //Add new item
         uiScope.launch {
             withContext(Dispatchers.IO) {
                 val item = Item(heading = heading, description = description)
@@ -36,7 +36,7 @@ class AddViewModel(
         navigate()
     }
 
-    fun update(item : Item){
+    fun update(item : Item){                                      //Update existing item
         uiScope.launch {
             withContext(Dispatchers.IO){
                 database.update(item)
@@ -49,7 +49,7 @@ class AddViewModel(
         _done.value = true
     }
 
-    fun deleteAndNavigate(item: Item) {  //delete here
+    fun deleteAndNavigate(item: Item) {                              //delete an Item
 
         uiScope.launch {
             withContext(Dispatchers.IO){

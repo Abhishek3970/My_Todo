@@ -16,7 +16,7 @@ class HomepageViewModel(
 
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
-    fun clear(){
+    fun clear(){                     //delete all from DB
         uiScope.launch {
             withContext(Dispatchers.IO){
                 database.clear()

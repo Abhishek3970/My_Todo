@@ -29,16 +29,14 @@ class Homepage : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.homepage_fragment, container, false)
 
         viewModelSetup()
+
         binding.toolbar.inflateMenu(R.menu.menu_delete_all)
         binding.toolbar.setOnMenuItemClickListener {
             alertDialogToConfirm()
             true
         }
+
         binding.lifecycleOwner = this
-
-
-
-
 
         val adapter = Adapter(
             ItemClickListener { item ->
@@ -53,11 +51,17 @@ class Homepage : Fragment() {
                 )
             }
         )
+
         binding.recyclerView.adapter = adapter
 
         viewModel.items.observe(viewLifecycleOwner, Observer {
             it?.let {
                 adapter.data = it
+                if(it.isEmpty()){
+                    binding.textViewFree.visibility = View.VISIBLE
+                } else {
+                    binding.textViewFree.visibility = View.INVISIBLE
+                }
             }
         })
 

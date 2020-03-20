@@ -30,10 +30,7 @@ class Add : Fragment() {
 
         viewModelSetup()
 
-        val arg = arguments?.let { AddArgs.fromBundle(it) }
-        val flag = arg?.flag
-        val item = Item(arg?.id!!, arg.heading, arg.description, arg.time)
-        binding.item = item
+        val (flag, item) = getDataFromSafeArgs()
 
         if (flag == 0) {
             binding.delete.visibility = View.INVISIBLE
@@ -57,6 +54,14 @@ class Add : Fragment() {
 
 
         return binding.root
+    }
+
+    private fun getDataFromSafeArgs(): Pair<Int?, Item> {
+        val arg = arguments?.let { AddArgs.fromBundle(it) }
+        val flag = arg?.flag
+        val item = Item(arg?.id!!, arg.heading, arg.description, arg.time)
+        binding.item = item
+        return Pair(flag, item)
     }
 
 
